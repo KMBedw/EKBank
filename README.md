@@ -278,6 +278,19 @@ npm start
 - Aucune erreur de compilation TypeScript
 - L'interface de connexion s'affiche correctement
 
+### 🔑 Données de Démonstration
+
+**Utilisateur de test pré-configuré :**
+
+```json
+{
+  "email": "demo@bank.com",
+  "password": "P@ssw0rd!"
+}
+```
+
+> 💡 **Note :** Ces identifiants sont déjà configurés dans la base de données et permettent de tester immédiatement toutes les fonctionnalités de l'application sans avoir besoin de créer un nouveau compte.
+
 ### 🧪 Scénarios de Test
 
 #### **Test 1 : Authentification**
@@ -288,11 +301,17 @@ npm start
 4. **Vérifier le token JWT** dans le localStorage du navigateur
 5. **Tester la déconnexion** et la suppression du token
 
-**Données de test suggérées :**
+**🔑 Données de démonstration :**
+```json
+{
+  "email": "demo@bank.com",
+  "password": "P@ssw0rd!"
+}
 ```
-Email: test@example.com
-Mot de passe: Test123!
-```
+
+**Identifiants de test :**
+- **Email :** `demo@bank.com`
+- **Mot de passe :** `P@ssw0rd!`
 
 #### **Test 2 : Dashboard et Données**
 
@@ -310,8 +329,8 @@ Mot de passe: Test123!
    ```json
    POST /api/Auth/login
    {
-     "email": "test@example.com",
-     "password": "Test123!"
+     "email": "demo@bank.com",
+     "password": "P@ssw0rd!"
    }
    ```
 
