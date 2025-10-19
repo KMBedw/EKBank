@@ -1,0 +1,25 @@
+# === BACKEND (.NET) ===
+**/bin/
+**/obj/
+*.user
+*.db
+*.db-shm
+*.db-wal
+*.suo
+*.userosscache
+*.sln.docstates
+.env
+secrets.json
+appsettings.Development.json
+
+# === FRONTEND (React) ===
+frontend/node_modules/
+frontend/build/
+frontend/.env
+
+# === Visual Studio / VS Code ===
+.vscode/
+.idea/
+*.vs/
+*.DS_Store
+Thumbs.db
