@@ -15,7 +15,7 @@ EKBank est une application bancaire développée avec une architecture full-stac
 ### 🔧 Backend (.NET 8.0)
 
 #### **Frameworks & Technologies**
-- **ASP.NET Core 8.0** - Framework web moderne et performant
+- **ASP.NET Core 8.0 en C#** 
 - **Entity Framework Core 8.0** - ORM pour la gestion de base de données
 - **SQL Server** - Base de données relationnelle
 - **Swagger/OpenAPI** - Documentation automatique de l'API
@@ -38,6 +38,48 @@ EKBank est une application bancaire développée avec une architecture full-stac
 - **Configuration flexible** (appsettings.json, variables d'environnement)
 - **Gestion des erreurs** centralisée
 - **Validation des modèles** avec Data Annotations
+
+### 🗄️ Base de Données (Microsoft SQL Server)
+
+#### **Configuration & Architecture**
+- **Microsoft SQL Server** - Système de gestion de base de données relationnelle
+- **Entity Framework Core 8.0** - ORM avec support SQL Server
+- **Code First Approach** - Modèles définis en C# puis migrés vers SQL Server
+- **Connection String** configurée dans `appsettings.json`
+- **Migrations automatiques** pour la gestion du schéma
+
+#### **Structure de la Base de Données**
+```sql
+-- Tables principales
+├── Clients          # Informations des utilisateurs
+│   ├── Id (PK)      # Clé primaire auto-incrémentée
+│   ├── Nom          # Nom du client
+│   ├── Email        # Email unique
+│   └── PasswordHash # Mot de passe haché (BCrypt)
+│
+├── Comptes          # Comptes bancaires
+│   ├── Id (PK)      # Clé primaire auto-incrémentée
+│   ├── NumeroCompte # Numéro unique du compte
+│   ├── Solde        # Solde actuel (decimal)
+│   ├── TypeCompte   # Type de compte (Courant/Épargne)
+│   └── ClientId (FK)# Référence vers Clients
+│
+└── Transactions     # Historique des transactions
+    ├── Id (PK)      # Clé primaire auto-incrémentée
+    ├── Montant      # Montant de la transaction
+    ├── Type         # Type (Débit/Crédit)
+    ├── Description  # Description de la transaction
+    ├── DateTransaction # Date et heure
+    └── CompteId (FK)# Référence vers Comptes
+```
+
+#### **Fonctionnalités SQL Server Utilisées**
+- **Identity Columns** - Auto-incrémentation des clés primaires
+- **Foreign Keys** - Relations entre tables avec contraintes d'intégrité
+- **Indexes** - Optimisation des requêtes sur Email et NumeroCompte
+- **Decimal Precision** - Gestion précise des montants financiers
+- **DateTime2** - Stockage précis des dates de transaction
+- **Trusted Connection** - Authentification Windows intégrée
 
 ### 🎨 Frontend (React + TypeScript)
 
@@ -136,8 +178,36 @@ Avant de commencer les tests, assurez-vous d'avoir installé :
 
 - **Node.js** (version 16 ou supérieure)
 - **.NET 8.0 SDK**
-- **SQL Server** (LocalDB ou instance complète)
+- **Microsoft SQL Server** (une des options suivantes) :
+  - **SQL Server LocalDB** (recommandé pour le développement)
+  - **SQL Server Express** (gratuit)
+  - **SQL Server Developer Edition** (gratuit pour le développement)
+  - **Instance SQL Server complète**
 - **Git** pour cloner le projet
+
+#### **Installation de SQL Server LocalDB (Recommandé)**
+
+**Windows :**
+```bash
+# Télécharger et installer SQL Server LocalDB
+# Depuis : https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb
+
+# Vérifier l'installation
+sqllocaldb info
+
+# Créer une instance (si nécessaire)
+sqllocaldb create "MSSQLLocalDB"
+sqllocaldb start "MSSQLLocalDB"
+```
+
+**Configuration de la Connection String :**
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=BanqueDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+}
+```
 
 ### 🔧 Installation et Configuration
 
@@ -156,11 +226,17 @@ cd backend/Banque.API
 # Restaurer les packages NuGet
 dotnet restore
 
-# Configurer la base de données
+# Gestion de la base de données SQL Server
 dotnet ef database update
 
 # (Optionnel) Créer une nouvelle migration si nécessaire
 dotnet ef migrations add NomDeLaMigration
+
+# Commandes utiles pour la base de données
+dotnet ef database drop          # Supprimer la base de données
+dotnet ef migrations list        # Lister toutes les migrations
+dotnet ef migrations remove      # Supprimer la dernière migration
+dotnet ef database update 0      # Revenir à l'état initial (vide)
 ```
 
 #### 3. **Configuration du Frontend**
@@ -315,8 +391,7 @@ dotnet ef database update
 
 ---
 
-## 👨‍💻 Développé avec Passion
 
-Ce projet démontre une maîtrise complète du développement full-stack moderne avec les meilleures pratiques de l'industrie en matière de sécurité, d'architecture et d'expérience utilisateur.
+**Développé par Edwin Koumba**  
+*Développeur Full-Stack passionné*
 
-**Technologies maîtrisées :** .NET 8, React 19, TypeScript, Material-UI, Redux Toolkit, Entity Framework Core, JWT, SQL Server, et bien plus encore !
